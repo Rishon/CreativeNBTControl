@@ -7,27 +7,27 @@ import org.bukkit.entity.Player
 
 class CommandHandler(private val plugin: CC) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, cmdlabel: String, args: Array<String>): Boolean {
-        if (cmdlabel.equals("cnc", ignoreCase = true) == true) {
-            if (args.size == 1) {
-                if (args[0].equals("reload", ignoreCase = true) == true) {
-                    if (sender is Player) {
-                        if (sender.hasPermission("CNC.admin") == false) {
-                            plugin.soundHandler.sendPlingSound(sender)
-                            sender.sendMessage(plugin.configHandler.getStringWithColor("ChatMessages.NoPermission"))
-                            return true
-                        } else {
-                            plugin.soundHandler.sendPlingSound(sender)
-                            sender.sendMessage(plugin.configHandler.getStringWithColor("ChatMessages.CmdReload"))
-                        }
-                    }
-                    plugin.configHandler.loadConfig()
+
+        if (sender !is Player) {
+            sender.sendMessage("You must be a player to use this command!")
+            return true
+        }
+
+        if (args.size == 1) {
+            if (args[0].equals("reload", ignoreCase = true)) {
+                if (!sender.hasPermission("CNC.admin")) {
+                    plugin.getSoundHandler().sendPlingSound(sender)
+                    sender.sendMessage(plugin.getConfigHandler().getStringWithColor("ChatMessages.NoPermission"))
+                    return true
+                } else {
+                    plugin.getSoundHandler().sendPlingSound(sender)
+                    sender.sendMessage(plugin.getConfigHandler().getStringWithColor("ChatMessages.CmdReload"))
                 }
-            } else {
-                if (sender is Player) {
-                    plugin.soundHandler.sendConfirmSound(sender)
-                }
-                sender.sendMessage(plugin.configHandler.getStringWithColor("ChatMessages.CmdHelp"))
+                plugin.getConfigHandler().loadConfig()
             }
+        } else {
+            plugin.getSoundHandler().sendConfirmSound(sender)
+            sender.sendMessage(plugin.getConfigHandler().getStringWithColor("ChatMessages.CmdHelp"))
         }
         return true
     }

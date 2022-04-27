@@ -7,55 +7,44 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Logger
 
 class CC : JavaPlugin() {
-    var is19Server = true
-    var isIt18Server = true
-    var is13Server = true
+
+    companion object {
+        var log: Logger? = null
+        var configHandler: ConfigHandler? = null
+        var soundHandler: SoundHandler? = null
+    }
+
     override fun onEnable() {
-        log = logger
-        mcVersion
+
         configHandler = ConfigHandler(this)
         soundHandler = SoundHandler(this)
-        //Register Listeners
-        val pm = server.pluginManager
-        pm.registerEvents(CreativeEvent(this), this)
-        val cH = CommandHandler(this)
-        getCommand("cnc")!!.setExecutor(cH)
-        log!!.info(pluginName + " loaded successfully!")
+
+        this.registerCommands();
+        this.registerListeners();
+        this.logger.info("${this.description.name} loaded successfully!")
     }
 
     override fun onDisable() {
         Bukkit.getScheduler().cancelTasks(this)
         HandlerList.unregisterAll(this)
-        log!!.info(pluginName + " is disabled!")
+        this.logger.info("${this.description.name} is disabled!")
     }
 
-    private val mcVersion: Unit
-        private get() {
-            val serverVersion =
-                Bukkit.getBukkitVersion().split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val version = serverVersion[0]
-            if (version.matches("1.7.10")) {
-                isIt18Server = false
-                is19Server = false
-                is13Server = false
-            }
-            if (version.matches("1.7.10") || version.matches("1.7.9") || version.matches("1.7.5") || version.matches("1.7.2") || version.matches(
-                    "1.8.8"
-                ) || version.matches("1.8.3") || version.matches("1.8.4") || version.matches("1.8")
-            ) {
-                is19Server = false
-                is13Server = false
-            }
-        }
+    private fun registerListeners() {
+        val pm = server.pluginManager
+        pm.registerEvents(CreativeEvent(this), this)
+    }
 
-    companion object {
-        var log: Logger? = null
-        var pluginName = "CreativeNbtControl"
-        var configHandler: ConfigHandler? = null
-            get() = Companion.field
-            private set
-        var soundHandler: SoundHandler? = null
-            get() = Companion.field
-            private set
+    private fun registerCommands() {
+        val cH = CommandHandler(this)
+        this.getCommand("cnc")!!.setExecutor(cH)
+    }
+
+    fun getConfigHandler(): ConfigHandler {
+        return configHandler!!
+    }
+
+    fun getSoundHandler(): SoundHandler {
+        return soundHandler!!
     }
 }
