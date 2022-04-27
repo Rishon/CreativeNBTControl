@@ -49,7 +49,7 @@ class CreativeEvent(private val cc: CC) : Listener {
                                             break
                                         }
                                     } catch (e: Exception) {
-                                        CC.log!!.warning("Error on material: " + s + " Error: " + e.message)
+                                        // CC.log!!.warning("Error on material: " + s + " Error: " + e.message)
                                     }
                                 }
                                 if (cursorItem.enchantments.isNotEmpty() && !p.hasPermission("CNC.bypass.enchants") && checkEnchants) {
@@ -86,7 +86,7 @@ class CreativeEvent(private val cc: CC) : Listener {
                                     break
                                 }
                             } catch (e: Exception) {
-                                CC.log!!.warning("Error on material: " + s + " Error: " + e.message)
+                                // CC.log!!.warning("Error on material: " + s + " Error: " + e.message)
                             }
                         }
                         if (cursorItem.enchantments.isNotEmpty() && !p.hasPermission("CNC.bypass.enchants") && checkEnchants) {
