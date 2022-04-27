@@ -1,11 +1,11 @@
 name: CreativeNbtControl
 main: net.craftersland.creativeNBT.CC
-version: 1.16
+version: 1.17
 author: CraftersLand
 website: www.craftersland.net
 load: STARTUP
 description: Control over creative NBT data copy function.
-api-version: 1.13
+api-version: 1.17
 commands:
     cnc:
         description: The main command.

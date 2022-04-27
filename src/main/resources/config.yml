@@ -1,6 +1,5 @@
 # default config.yml for CreativeNbtControl
 # config version 1.13
- 
 
 #The plugin will check for the following items.
 # Material names: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
