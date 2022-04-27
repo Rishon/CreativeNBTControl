@@ -10,14 +10,15 @@ class CC : JavaPlugin() {
 
     companion object {
         var log: Logger? = null
-        var configHandler: ConfigHandler? = null
-        var soundHandler: SoundHandler? = null
     }
+
+    private var configHandler: ConfigHandler? = null
+    private var soundHandler: SoundHandler? = null
 
     override fun onEnable() {
 
-        configHandler = ConfigHandler(this)
-        soundHandler = SoundHandler(this)
+        this.configHandler = ConfigHandler(this)
+        this.soundHandler = SoundHandler(this)
 
         this.registerCommands();
         this.registerListeners();
@@ -31,7 +32,7 @@ class CC : JavaPlugin() {
     }
 
     private fun registerListeners() {
-        val pm = server.pluginManager
+        val pm = this.server.pluginManager
         pm.registerEvents(CreativeEvent(this), this)
     }
 

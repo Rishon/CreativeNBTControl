@@ -3,29 +3,18 @@ package net.craftersland.creativeNBT
 import java.io.File
 
 class ConfigHandler(private val eco: CC) {
+
     init {
         loadConfig()
     }
 
     fun loadConfig() {
-        val pluginFolder = File("plugins" + System.getProperty("file.separator") + eco.description.name)
-        if (!pluginFolder.exists()) {
-            pluginFolder.mkdir()
-        }
-        val configFile =
-            File("plugins" + System.getProperty("file.separator") + eco.description.name + System.getProperty("file.separator") + "config.yml")
+        val configFile = File(eco.dataFolder, "config.yml")
         if (!configFile.exists()) {
-            CC.log!!.info("No config file found! Creating new one...")
-            eco.saveDefaultConfig()
+            configFile.parentFile.mkdirs()
+            eco.saveResource("config.yml", false)
         }
-        try {
-            CC.log!!.info("Loading the config file...")
-            eco.config.load(configFile)
-            CC.log!!.info("Loading complete!")
-        } catch (e: Exception) {
-            CC.log!!.severe("Could not load the config file! You need to regenerate the config! Error: " + e.message)
-            e.printStackTrace()
-        }
+        eco.config.load(configFile)
     }
 
     fun getString(key: String): String {

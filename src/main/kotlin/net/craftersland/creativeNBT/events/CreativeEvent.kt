@@ -107,7 +107,6 @@ class CreativeEvent(private val cc: CC) : Listener {
         if (entity.type == EntityType.ITEM_FRAME) {
             if (!p.hasPermission("CNC.bypass") && p.gameMode == GameMode.CREATIVE) {
                 event.isCancelled = true
-                p.sendMessage(cc.getConfigHandler().getStringWithColor("ChatMessages.OpenSurvivalFrame"))
             }
         }
     }
@@ -120,7 +119,6 @@ class CreativeEvent(private val cc: CC) : Listener {
             if (item.type == Material.AIR) return
             if (!p.hasPermission("CNC.bypass") && p.gameMode == GameMode.CREATIVE) {
                 event.isCancelled = true
-                p.sendMessage(cc.getConfigHandler().getStringWithColor("ChatMessages.OpenSurvivalArmor"))
             }
         }
     }
